@@ -1,0 +1,15 @@
+.bg-header {
+    background-color: #7740B7; 
+}
+.bg-footer {
+    background-color: #7740B7; 
+}
+.bg-fondo {
+    background-color: #41286A;
+}
+.text-color{
+    color: #FFD62C;
+}
+.pagination-container .pagination-status {
+    color: white;
+}
