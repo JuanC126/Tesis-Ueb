@@ -62,9 +62,9 @@ class BuscarIndex extends Component
     }
 
    public function refrescar(){
-    $this->resetPage();
+    $this->resetPage('page');
    }
-
+   
     public function buscar()
     {
         $this->resetPage(); // Reinicia la paginación cuando se realiza una nueva búsqueda

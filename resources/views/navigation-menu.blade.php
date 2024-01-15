@@ -118,6 +118,13 @@
                             <x-dropdown-link :href="route('anuncio.perfil')">
                                 {{ __('Perfil') }}
                             </x-dropdown-link>
+
+                            @can('eliminar anuncios')
+                            <x-dropdown-link :href="route('admin.home')">
+                                {{ __('Administrador') }}
+                            </x-dropdown-link>
+                            @endcan
+
                             <x-dropdown-link href="{{ route('profile.show') }}">
                                 {{ __('Ajustes') }}
                             </x-dropdown-link>
@@ -196,10 +203,17 @@
                 <x-responsive-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')" class="text-white hover:text-gray-50">
                     {{ __('Ajustes') }}
                 </x-responsive-nav-link>
+                    
                 <x-responsive-nav-link :href="route('anuncio.perfil')" class="text-white hover:text-gray-50">
                     {{ __('Perfil') }}
                 </x-responsive-nav-link>
-                
+
+                @can('eliminar anuncios')
+                <x-responsive-nav-link :href="route('admin.home')" class="text-white hover:text-gray-50">
+                    {{ __('Administrador') }}
+                </x-responsive-nav-link>
+                @endcan
+
                 @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
                     <x-responsive-nav-link href="{{ route('api-tokens.index') }}" :active="request()->routeIs('api-tokens.index')">
                         {{ __('API Tokens') }}

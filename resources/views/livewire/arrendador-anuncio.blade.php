@@ -25,11 +25,13 @@
         </div>
         </div> --}}
       
-       
-
+        
         <div class="relative m-8 overflow-x-auto shadow-md sm:rounded-lg">
+            @if ($anuncios->count())
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                   
                     <tr>
                         <th scope="col" class="px-6 py-3">
                             Titulo
@@ -54,7 +56,11 @@
                         </th>
                     </tr>
                 </thead>
+               
+        
                 <tbody>
+                
+
                     @foreach ($anuncios as $anuncio)
                     <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
@@ -95,10 +101,10 @@
                        
                             
                                 
-                            <div id="popup-modal-{{ $anuncio->id }}" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                            <div id="popup-modal-{{ $anuncio->id }}" wire:keydown="limpiar" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
                                 <div class="relative w-full max-w-md max-h-full">
                                     <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                                        <button type="button"  class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="popup-modal-{{ $anuncio->id }}">
+                                        <button type="button"  class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" wire:keydown="limpiar" data-modal-hide="popup-modal-{{ $anuncio->id }}">
                                             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                                             </svg>
@@ -110,11 +116,11 @@
                                             </svg>
                                             <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">¿Estas seguro que deseas eliminar este anuncio?</h3>
                                             
-                                            <button wire:click="eliminarAnuncio({{ $anuncio->id }})" data-modal-hide="popup-modal-{{ $anuncio->id }}" type="button" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
+                                            <button  wire:keydown="limpiar"  wire:click="eliminarAnuncio({{ $anuncio->id }})" data-modal-hide="popup-modal-{{ $anuncio->id }}" type="button" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
                                                 Si, eliminar
                                             </button>
                                           
-                                            <button  data-modal-hide="popup-modal-{{ $anuncio->id }}" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">No, cancelar</button>
+                                            <button wire:keydown="limpiar"  data-modal-hide="popup-modal-{{ $anuncio->id }}" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">No, cancelar</button>
                                         </div>
                                     </div>
                                 </div>
@@ -126,6 +132,14 @@
                     
                 </tbody>
             </table>
+            <div class="">
+                {{$anuncios->links()}}
+            </div>
+            @else
+                <div class="">
+                    <strong> No hay anuncios, crea uno ahora</strong>
+                </div>
+            @endif
         </div>
         
 

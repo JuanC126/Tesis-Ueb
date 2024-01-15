@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 
+
 class anuncio extends Model {   
     protected $fillable = ['latitud','longitud','slug','celular','titulo','user_id','descripcion','pago_mensual', 
     'nombre_calle','referencia','garantia','garantia_valor','foto_url','sector','tipo_inmueble',
@@ -51,7 +52,7 @@ class anuncio extends Model {
     }
 
     public function sector() {
-        return $this->belongsTo(Sector::class );
+        return $this->belongsTo(sectores::class );
     }
     
     public function inmueble() {

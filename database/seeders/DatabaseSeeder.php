@@ -26,14 +26,15 @@ class DatabaseSeeder extends Seeder
         Storage::deleteDirectory('images');
         Storage::makeDirectory('images');
 
-     
-            
+        $this->call(PermissionSeeder::class);
+        $this->call(RoleSeeder::class);    
         $this->call(UserSeeder::class);
         $this->call(InmuebleSeeder::class);
         $this->call(SectoresSeeder::class);
         $this->call(ServicioBasicoSeeder::class);
         $this->call(ServicioExtraSeeder::class);
         $this->call(AnuncioSeeder::class);
+        
             
 
             

@@ -5,10 +5,11 @@ use App\Models\User;
 use App\Models\anuncio;
 use App\Models\visitas;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class ArrendadorAnuncio extends Component
 {  
-   
+    use WithPagination;
 
     public $Dropdown_1 = ['casa', 'departamento', 'habitacion estudiantil', 'mini departamento',     'habitacion compartida' ];
     public $Dropdown_2 = ['agua', 'luz','internet','cable','baño privado'];
@@ -87,7 +88,9 @@ class ArrendadorAnuncio extends Component
         
         $usuario = User::where('id', auth()->user()->id)->first();
 
-        $anuncios = anuncio::where('user_id', $usuario->id)->get();
+        $anuncios = anuncio::where('user_id', $usuario->id)
+                            ->paginate(6);
+                            
 
        /*  $visitas=visitas::where('anuncio_id', $anuncios->user_id)->get(); */
 
@@ -108,14 +111,19 @@ class ArrendadorAnuncio extends Component
             // Eliminar el anuncio de la base de datos
             $anuncio->delete();
         }
-
-        // Actualizar la lista de anuncios después de la eliminación
-        $this->render();
+        
+        $this->limpiar();
     }
+
+    public function limpiar(){
+
+        $this->resetPage('page');
+    
+    }
+
     public function refreshAnuncio()
     {
         
-
         $this->render();
     }
 

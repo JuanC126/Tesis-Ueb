@@ -1,7 +1,10 @@
 <x-guest-layout>
     <x-authentication-card>
-        <x-slot name="logo">
-            <x-authentication-card-logo />
+        <x-slot name="logo" >
+            <a href="/">
+                <img src="{{ Storage::url('logo/Group.png')}}" class="w-100 h-20 fill-current text-gray-500" />
+                </a>
+           
         </x-slot>
 
         <x-validation-errors class="mb-4" />

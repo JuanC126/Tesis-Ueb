@@ -80,9 +80,39 @@ class PublicarController extends Controller
             }
             $anuncio->update(['foto_url' => $url]);
         }
-        return redirect()->route('publicar.perfil', $anuncio->slug)->with('message', 'Anuncio actualizado con éxito!');
+        return redirect()->route('publicar.perfil', $anuncio->slug)->with('message', 'Datos del nuncio actualizado con éxito! ');
     }
+    public function update2(Request $request, $slug) {
+        $anuncio = anuncio::where('slug', $slug)->firstOrFail();
+        $mediaItems = media::where('anuncio_id', $anuncio->id)->get();
+
+        foreach($mediaItems as $media) {
+            // Obtiene la URL de la imagen
+            $url = $media->plus_url;
+            
+            // Elimina la imagen
+            Storage::disk('public')->delete($url);
         
+            // Elimina el registro de la base de datos
+            $media->delete();
+        }
+    
+        // Guarda las nuevas fotos
+        $images = [];
+        foreach($request->file('fotos') as $image) {
+            $path = $image->store('fotos', 'public');
+            $images[] = $path;
+    
+            // Crea un nuevo registro en la base de datos para cada imagen
+            media::create([
+                'anuncio_id' => $anuncio->id,
+                'plus_url' => $path
+            ]);
+        }
+    
+        return redirect()->route('publicar.perfil', $anuncio->slug)->with('message', 'Fotos actualizadas con éxito!');
+    }
+  
 
     public function eliminar($slug){     
         $anuncio = anuncio::where('slug', $slug)->firstOrFail();

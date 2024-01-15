@@ -7,7 +7,7 @@
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                 </svg>
             </div>
-            <input wire:model="search" type="search" id="default-search" class=" overflow-hidden w-full p-4  ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Lugar, precios, sector, servicios" required>
+            <input wire:keydown="refrescar" wire:model="search" type="search" id="default-search" class=" overflow-hidden w-full p-4  ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Lugar, precios, sector, servicios" required>
             <button type="submit" class="text-white mr-10 absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Buscar</button>
         </div>
     </form>
@@ -28,7 +28,7 @@
                     <ul class="py-2 text-sm text-gray-700 dark:text-gray-900" aria-labelledby="dropdownDefaultButton">
                         <li>    
                             @foreach($tipo_inmuebles as $anuncio)
-                            <a  class="cursor-pointer block px-4 py-2 hover-bg-gray-100 dark:hover-bg-gray-600 dark:hover-text-white" wire:click="$set('inmueble_id',{{$anuncio->id}})" wire:click="$set('open', false)" >{{$anuncio->inmueble}}</a>
+                            <a  class="cursor-pointer block px-4 py-2 hover-bg-gray-100 dark:hover-bg-gray-600 dark:hover-text-white" wire:keydown="refrescar" wire:click="$set('inmueble_id',{{$anuncio->id}})" wire:click="$set('open', false)" >{{$anuncio->inmueble}}</a>
                             @endforeach
                         </li>
                       
@@ -48,10 +48,10 @@
                 <div id="dropdown2" class="absolute z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
                     <ul class="py-2 text-sm text-gray-700 dark:text-gray-900" aria-labelledby="dropdownPrecioButton">
                         <li>
-                            <a class="cursor-pointer block px-4 py-2 hover-bg-gray-100 dark:hover-bg-gray-600 dark:hover-text-white" wire:click="$set('precio_range', null)">Todos</a>
+                            <a class="cursor-pointer block px-4 py-2 hover-bg-gray-100 dark:hover-bg-gray-600 dark:hover-text-white" wire:keydown="refrescar" wire:click="$set('precio_range', null)">Todos</a>
                         </li>
                         @foreach($precios as $valor => $etiqueta)
-                            <a class="cursor-pointer block px-4 py-2 hover-bg-gray-100 dark:hover-bg-gray-600 dark:hover-text-white" wire:click="$set('precio_range', '{{$valor}}')" wire:click="$set('open', false)">{{$etiqueta}}</a>
+                            <a class="cursor-pointer block px-4 py-2 hover-bg-gray-100 dark:hover-bg-gray-600 dark:hover-text-white" wire:keydown="refrescar" wire:click="$set('precio_range', '{{$valor}}')" wire:click="$set('open', false)">{{$etiqueta}}</a>
                         @endforeach
                     </ul>
                 </div>
@@ -70,7 +70,7 @@
                     @foreach($sectores as $anuncio)
                     <li>
                         <div class="flex items-center pl-2 rounded hover:bg-gray-100 dark:hover-bg-gray-600">
-                            <label class="w-full py-2 ml-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300" wire:click="$set('sector_id', {{$anuncio->id}})" wire:click="$set('open', false)">{{$anuncio->sector}}</label>
+                            <label class="w-full py-2 ml-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300" wire:keydown="refrescar" wire:click="$set('sector_id', {{$anuncio->id}})" wire:click="$set('open', false)">{{$anuncio->sector}}</label>
                         </div>
                     </li>
                     @endforeach
@@ -80,7 +80,7 @@
         </div>
 
          <!-- Dropdown 4 -->
-            <button id="dropdownSearchButton"  data-dropdown-toggle="dropdown4" class=" text-gray-900 bg-white  hover:bg-yellow-500 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center " type="button">
+            <button id="dropdownSearchButton" wire:keydown="refrescar" data-dropdown-toggle="dropdown4" class=" text-gray-900 bg-white  hover:bg-yellow-500 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center " type="button">
                 Servicios
                 <svg class="w-2.5 h-2.5 ml-auto mt-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
@@ -91,7 +91,7 @@
             <div id="dropdown4" class="absolute z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
                 <ul class="py-2 text-sm text-gray-700 dark:text-gray-900" aria-labelledby="dropdownDefaultButton">
                     @foreach($serviciosAdicionales as $servicio )
-                        <a class="cursor-pointer block px-4 py-2 hover-bg-gray-100 dark:hover-bg-gray-600 dark:hover-text-white" 
+                        <a wire:keydown="refrescar" class="cursor-pointer block px-4 py-2 hover-bg-gray-100 dark:hover-bg-gray-600 dark:hover-text-white" 
                         wire:click="SerAdic('{{ $servicio->adicionales }}')" 
                         wire:click="$set('open', false)">
                         {{ $servicio->adicionales }}
@@ -104,7 +104,7 @@
 
             {{-- boton de limpiar filtros --}}
 {{--             <button wire:click="refrescar"  data-dropdown-toggle="limpiar" class=" text-gray-900 bg-red-500  hover:bg-yellow-500 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-12 py-2.5 text-center inline-flex items-center " type="button">
- --}}               {{--  Limpiar --}}
+ --}}               {{-- git --}}
                 {{-- <svg class="w-2.5 h-2.5 ml-auto mt-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                 </svg> --}}

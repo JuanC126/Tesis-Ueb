@@ -48,7 +48,14 @@
                     </x-label>
                 </div>
             @endif
-
+            <div class="flex items-center mt-4">
+                <x-checkbox id="terms_accepted" name="terms_accepted" wire:model.defer="state.terms_accepted" class="mr-2" />
+                <x-label id="terms_accepted" for="terms_accepted" class="select-none">
+                    Acepto los <a href="{{ route('terms') }}" class="text-blue-500">términos y condiciones</a>
+                </x-label>
+            </div>
+            
+            
             <div class="flex items-center justify-end mt-4">
                 <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
                     {{ __('¿Ya tienes una cuenta?') }}
@@ -57,7 +64,9 @@
                 <x-button class="ml-4">
                     {{ __('Registrate') }}
                 </x-button>
-            </div>
+                <!-- Tu formulario de registro actual -->
+
+             
         </form>
     </x-authentication-card>
 
